@@ -27,4 +27,8 @@ public class ProductService {
         product.setQuantity(quantity);
         return productRepository.save(product);
     }
+
+    public long countLowStockProducts() {
+        return productRepository.findByQuantityLessThanEqual(5).size();
+    }
 }
