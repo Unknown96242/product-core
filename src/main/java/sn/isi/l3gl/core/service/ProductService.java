@@ -1,5 +1,7 @@
 package sn.isi.l3gl.core.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sn.isi.l3gl.core.entity.Product;
@@ -13,5 +15,9 @@ public class ProductService {
 
     public Product createProduct(Product product) {
         return productRepository.save(product);
+    }
+
+    public List<Product> listProducts() {
+        return productRepository.findAll();
     }
 }
