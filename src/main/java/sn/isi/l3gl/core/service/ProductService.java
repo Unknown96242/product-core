@@ -20,4 +20,11 @@ public class ProductService {
     public List<Product> listProducts() {
         return productRepository.findAll();
     }
+
+    public Product updateQuantity(Long id, Integer quantity) {
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Produit introuvable avec id: " + id));
+        product.setQuantity(quantity);
+        return productRepository.save(product);
+    }
 }
