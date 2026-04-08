@@ -22,7 +22,7 @@ publish:
   stage: publish
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - mvn deploy -DskipTests -DaltDeploymentRepository=gitlab-maven::default::https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/maven
+    - mvn deploy -s ci_settings.xml -DskipTests
   only:
     - main
     - develop
