@@ -14,7 +14,7 @@
 	<version>0.3.0</version>
 	<packaging>jar</packaging>
 	<name>product-core</name>
-	<description>Projet d&apos;examen DevOps</description>
+	<description>Projet d'examen DevOps</description>
 	<url />
 	<licenses>
 		<license />
@@ -49,23 +49,49 @@
 		</dependency>
 	</dependencies>
 
-	<!-- Dependance Nexus -->
+	<!-- Configuration pour GitLab Package Registry -->
 	<distributionManagement>
 		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<url>http://localhost:8081/repository/maven-snapshots/</url>
+			<id>gitlab-maven</id>
+			<url>https://gitlab.com/api/v4/projects/81116502/packages/maven</url>
 		</snapshotRepository>
 		<repository>
-			<id>nexus-releases</id>
-			<url>http://localhost:8081/repository/maven-releases/</url>
+			<id>gitlab-maven</id>
+			<url>https://gitlab.com/api/v4/projects/81116502/packages/maven</url>
 		</repository>
 	</distributionManagement>
 
 	<build>
 		<plugins>
-			<!-- Ne pas inclure le plugin spring-boot-maven-plugin car product-core est une
-			LIBRAIRIE, pas une app exécutable  -->
+			<!-- Plugin Maven Source pour publier les sources  -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- Plugin Maven Javadoc  -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.6.3</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>

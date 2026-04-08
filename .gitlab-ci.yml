@@ -1,0 +1,43 @@
+stages:
+  - build
+  - test
+  - publish
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end"
+
+cache:
+  paths:
+    - .m2/repository
+
+build:
+  stage: build
+  image: maven:3.9.6-eclipse-temurin-17
+  script:
+    - mvn clean compile
+  only:
+    - main
+    - develop
+
+test:
+  stage: test
+  image: maven:3.9.6-eclipse-temurin-17
+  script:
+    - mvn test
+  only:
+    - main
+    - develop
+
+publish:
+  stage: publish
+  image: maven:3.9.6-eclipse-temurin-17
+  script:
+    - mvn deploy -s ci_settings.xml
+  only:
+    - main
+    - develop
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 week
