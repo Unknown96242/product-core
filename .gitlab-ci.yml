@@ -4,7 +4,6 @@ stages:
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end"
 
 cache:
   paths:
@@ -23,11 +22,7 @@ publish:
   stage: publish
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - mvn deploy -s ci_settings.xml -DskipTests
+    - mvn deploy -DskipTests -DaltDeploymentRepository=gitlab-maven::default::https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/maven
   only:
     - main
     - develop
-  artifacts:
-    paths:
-      - target/*.jar
-    expire_in: 1 week
