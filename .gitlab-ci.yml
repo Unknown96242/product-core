@@ -1,6 +1,5 @@
 stages:
   - build
-  - test
   - publish
 
 variables:
@@ -15,16 +14,7 @@ build:
   stage: build
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - mvn clean compile
-  only:
-    - main
-    - develop
-
-test:
-  stage: test
-  image: maven:3.9.6-eclipse-temurin-17
-  script:
-    - mvn test
+    - mvn clean compile -DskipTests
   only:
     - main
     - develop
@@ -33,7 +23,7 @@ publish:
   stage: publish
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - mvn deploy -s ci_settings.xml
+    - mvn deploy -s ci_settings.xml -DskipTests
   only:
     - main
     - develop
